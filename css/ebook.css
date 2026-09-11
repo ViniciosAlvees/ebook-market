@@ -1,0 +1,1184 @@
+/* =========================================================
+   EBOOKS — ebook.css
+   Compatível com o ebook.html atual
+   Tema: preto + azul futurista + verde no carrinho
+   ========================================================= */
+
+:root {
+    --bg: #03050a;
+    --bg-2: #07101c;
+    --card: rgba(8, 15, 27, .82);
+    --blue: #008cff;
+    --blue-light: #22b7ff;
+    --blue-dark: #0057a8;
+    --green: #00d26a;
+    --green-dark: #00994d;
+    --white: #f5f9ff;
+    --text: #d9e6f5;
+    --muted: #8293a8;
+    --border: rgba(0, 140, 255, .22);
+    --shadow: 0 0 35px rgba(0, 140, 255, .12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--white);
+    background:
+        radial-gradient(circle at 15% 10%, rgba(0, 140, 255, .14), transparent 28%),
+        radial-gradient(circle at 85% 30%, rgba(0, 140, 255, .10), transparent 25%),
+        linear-gradient(135deg, #020409 0%, #050b14 48%, #02050a 100%);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+    opacity: .28;
+    background-image:
+        linear-gradient(rgba(0, 140, 255, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 140, 255, .08) 1px, transparent 1px);
+    background-size: 55px 55px;
+    animation: gridMove 18s linear infinite;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 25%, rgba(0, 0, 0, .55) 100%);
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    border: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* =========================
+   FUNDO ANIMADO
+   ========================= */
+
+.background-books {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.background-books span {
+    position: absolute;
+    opacity: .045;
+    font-size: clamp(35px, 5vw, 75px);
+    filter: blur(.3px);
+    animation: floatBook 14s ease-in-out infinite;
+}
+
+.background-books span:nth-child(1) { left: 5%; top: 18%; animation-delay: 0s; }
+.background-books span:nth-child(2) { left: 18%; top: 72%; animation-delay: -4s; }
+.background-books span:nth-child(3) { left: 35%; top: 20%; animation-delay: -8s; }
+.background-books span:nth-child(4) { left: 52%; top: 78%; animation-delay: -2s; }
+.background-books span:nth-child(5) { left: 68%; top: 15%; animation-delay: -6s; }
+.background-books span:nth-child(6) { left: 82%; top: 62%; animation-delay: -10s; }
+.background-books span:nth-child(7) { left: 91%; top: 28%; animation-delay: -5s; }
+.background-books span:nth-child(8) { left: 45%; top: 48%; animation-delay: -12s; }
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    min-height: 76px;
+    padding: 15px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    border-bottom: 1px solid rgba(0, 140, 255, .16);
+    background: rgba(2, 6, 12, .82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.logo {
+    white-space: nowrap;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: 0 0 18px rgba(0, 140, 255, .5);
+}
+
+.logo span,
+.footer-logo {
+    color: var(--blue-light);
+}
+
+.header nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+}
+
+.header nav a {
+    position: relative;
+    color: #a9b9cc;
+    font-size: 14px;
+    font-weight: 600;
+    transition: .3s ease;
+}
+
+.header nav a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    width: 0;
+    height: 2px;
+    transform: translateX(-50%);
+    background: var(--blue);
+    box-shadow: 0 0 10px var(--blue);
+    transition: .3s ease;
+}
+
+.header nav a:hover {
+    color: white;
+}
+
+.header nav a:hover::after {
+    width: 100%;
+}
+
+.cart-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 17px;
+    border: 1px solid rgba(0, 210, 106, .5);
+    border-radius: 12px;
+    color: white;
+    background: linear-gradient(135deg, #00b95d, #007c40);
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 210, 106, .18);
+    transition: .3s ease;
+}
+
+.cart-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(0, 210, 106, .35);
+}
+
+#contadorCarrinho {
+    min-width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #001f0f;
+    background: white;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+/* =========================
+   HERO
+   ========================= */
+
+.hero {
+    position: relative;
+    min-height: 720px;
+    max-width: 1400px;
+    margin: auto;
+    padding: 100px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.hero-content {
+    max-width: 720px;
+    animation: heroIn .9s ease both;
+}
+
+.hero-tag,
+.section-title > span,
+.section-heading > div > span,
+.modal-tag {
+    display: inline-flex;
+    align-items: center;
+    color: var(--blue-light);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+}
+
+.hero-tag {
+    padding: 8px 13px;
+    border: 1px solid rgba(0, 140, 255, .35);
+    border-radius: 999px;
+    background: rgba(0, 140, 255, .07);
+    box-shadow: inset 0 0 20px rgba(0, 140, 255, .04);
+}
+
+.hero h1 {
+    margin: 22px 0 18px;
+    max-width: 760px;
+    font-size: clamp(48px, 7vw, 86px);
+    line-height: .98;
+    letter-spacing: -3px;
+    font-weight: 900;
+}
+
+.hero h1 span {
+    display: block;
+    color: var(--blue);
+    text-shadow: 0 0 35px rgba(0, 140, 255, .28);
+}
+
+.hero-content > p {
+    max-width: 620px;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.hero-buttons {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.primary-button,
+.secondary-button,
+.checkout-button,
+.finish-button,
+.back-button,
+.copy-pix {
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.primary-button {
+    padding: 15px 25px;
+    border-radius: 11px;
+    color: white;
+    background: linear-gradient(135deg, var(--blue), #0065c8);
+    box-shadow: 0 0 25px rgba(0, 140, 255, .18);
+}
+
+.primary-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(0, 140, 255, .3);
+}
+
+.secondary-button {
+    padding: 14px 24px;
+    border: 1px solid rgba(0, 140, 255, .55);
+    border-radius: 11px;
+    color: var(--blue-light);
+    background: rgba(0, 140, 255, .04);
+}
+
+.secondary-button:hover {
+    color: white;
+    background: rgba(0, 140, 255, .12);
+    transform: translateY(-3px);
+}
+
+/* =========================
+   LIVRO HOLOGRÁFICO
+   ========================= */
+
+.hero-book {
+    position: relative;
+    width: 350px;
+    height: 430px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    animation: bookEntrance 1s .15s ease both;
+}
+
+.hologram {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 140, 255, .20), transparent 68%);
+    filter: blur(2px);
+    animation: hologramPulse 3s ease-in-out infinite;
+}
+
+.floating-book {
+    position: relative;
+    z-index: 2;
+    width: 190px;
+    height: 250px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(34, 183, 255, .7);
+    border-radius: 9px 18px 18px 9px;
+    font-size: 88px;
+    background:
+        linear-gradient(135deg, rgba(0, 140, 255, .22), rgba(1, 6, 14, .96)),
+        repeating-linear-gradient(90deg, transparent 0 8px, rgba(255,255,255,.025) 9px 10px);
+    box-shadow:
+        -14px 16px 0 rgba(0, 71, 130, .28),
+        0 0 35px rgba(0, 140, 255, .32),
+        inset 0 0 30px rgba(0, 140, 255, .08);
+    transform: perspective(800px) rotateY(-18deg) rotateX(4deg);
+    animation: floatingBook 4s ease-in-out infinite;
+}
+
+.floating-book::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(34, 183, 255, .65);
+    box-shadow: 0 0 10px var(--blue);
+}
+
+/* =========================
+   SEÇÕES
+   ========================= */
+
+.genres-section,
+.books-section {
+    width: min(1280px, 88%);
+    margin: 0 auto;
+}
+
+.genres-section {
+    padding: 45px 0 90px;
+}
+
+.section-title {
+    text-align: center;
+}
+
+.section-title h2,
+.section-heading h2 {
+    margin-top: 12px;
+    font-size: clamp(30px, 4vw, 46px);
+    letter-spacing: -1px;
+}
+
+.section-title strong {
+    color: var(--blue);
+}
+
+.genres {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.genres button {
+    padding: 11px 18px;
+    border: 1px solid rgba(0, 140, 255, .22);
+    border-radius: 999px;
+    color: #aebed0;
+    background: rgba(8, 17, 29, .72);
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.genres button:hover,
+.genres button.active {
+    color: white;
+    border-color: var(--blue);
+    background: rgba(0, 140, 255, .13);
+    box-shadow: 0 0 20px rgba(0, 140, 255, .13);
+    transform: translateY(-2px);
+}
+
+.books-section {
+    padding: 35px 0 110px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.section-heading > div > span {
+    font-size: 10px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================
+   CARDS DE LIVROS
+   ========================= */
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 24px;
+}
+
+.book-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(10, 20, 34, .92), rgba(3, 8, 15, .94));
+    box-shadow: var(--shadow);
+    transition: .4s ease;
+    animation: cardIn .55s ease both;
+}
+
+.book-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 0;
+    border-radius: inherit;
+    background: linear-gradient(120deg, transparent, rgba(0, 140, 255, .14), transparent);
+    transform: translateX(-100%);
+    transition: .6s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0, 140, 255, .65);
+    box-shadow: 0 18px 50px rgba(0, 140, 255, .15);
+}
+
+.book-card:hover::before {
+    transform: translateX(100%);
+}
+
+.book-card img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 340px;
+    display: block;
+    object-fit: cover;
+    background: #07101c;
+    transition: .5s ease;
+}
+
+.book-card:hover img {
+    transform: scale(1.035);
+}
+
+.book-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 21px;
+}
+
+.book-card .genre,
+.book-genre {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--blue-light);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+}
+
+.book-card h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    line-height: 1.25;
+}
+
+.book-card p {
+    min-height: 66px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.book-footer,
+.book-actions {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.price {
+    color: white;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.price::before {
+    content: "R$ ";
+    color: var(--green);
+}
+
+.add-cart,
+.buy-button,
+.view-button {
+    padding: 10px 13px;
+    border-radius: 9px;
+    color: white;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.add-cart {
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+}
+
+.add-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 22px rgba(0, 210, 106, .25);
+}
+
+.view-button {
+    border: 1px solid rgba(0, 140, 255, .35);
+    background: rgba(0, 140, 255, .08);
+}
+
+.view-button:hover {
+    background: rgba(0, 140, 255, .18);
+}
+
+/* Classes adicionais caso o JS atual use estes nomes */
+.book-actions {
+    justify-content: flex-start;
+}
+
+.buy-button {
+    background: var(--blue);
+}
+
+.buy-button:hover {
+    box-shadow: 0 0 20px rgba(0, 140, 255, .3);
+}
+
+/* =========================
+   MODAL DO CARRINHO
+   ========================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: rgba(0, 0, 0, .78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.modal.show,
+.modal.active {
+    display: flex;
+    animation: fadeIn .25s ease;
+}
+
+.modal-content {
+    position: relative;
+    width: min(580px, 100%);
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 35px;
+    border: 1px solid rgba(0, 140, 255, .32);
+    border-radius: 22px;
+    background: linear-gradient(145deg, #081321, #03070d);
+    box-shadow: 0 25px 90px rgba(0, 0, 0, .65), 0 0 40px rgba(0, 140, 255, .12);
+    animation: modalIn .3s ease;
+}
+
+.close-modal {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: #b9c9da;
+    background: rgba(255,255,255,.05);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: white;
+    background: rgba(0, 140, 255, .16);
+}
+
+.modal-content h2 {
+    margin: 10px 0 25px;
+    font-size: 32px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.cart-item h4 {
+    font-size: 15px;
+}
+
+.cart-item small {
+    color: var(--muted);
+}
+
+.cart-item button {
+    padding: 7px 10px;
+    border-radius: 7px;
+    color: #ff8790;
+    background: rgba(255, 70, 80, .08);
+    cursor: pointer;
+}
+
+.cart-total,
+.summary-total {
+    margin-top: 22px;
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.cart-total strong,
+.summary-total strong {
+    color: var(--green);
+    font-size: 22px;
+}
+
+.checkout-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px 20px;
+    border-radius: 11px;
+    color: white;
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+    box-shadow: 0 0 25px rgba(0, 210, 106, .14);
+}
+
+.checkout-button:hover,
+.finish-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 210, 106, .2);
+}
+
+/* =========================
+   PAGAMENTO
+   ========================= */
+
+.payment-section {
+    display: none;
+    min-height: 100vh;
+    padding: 90px 20px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(0, 140, 255, .12), transparent 35%),
+        #03070d;
+}
+
+.payment-section.active,
+.payment-section.show {
+    display: block;
+}
+
+.payment-container {
+    width: min(900px, 100%);
+    margin: auto;
+}
+
+.back-button {
+    margin-bottom: 35px;
+    padding: 10px 15px;
+    border: 1px solid rgba(0, 140, 255, .25);
+    border-radius: 9px;
+    color: #b7c7d8;
+    background: rgba(0, 140, 255, .05);
+}
+
+.back-button:hover {
+    color: white;
+    border-color: var(--blue);
+}
+
+.payment-container h2 {
+    margin-top: 16px;
+    font-size: clamp(34px, 5vw, 52px);
+}
+
+.payment-description {
+    margin: 12px 0 30px;
+    color: var(--muted);
+}
+
+.order-summary,
+.customer-form,
+.payment-method {
+    margin-top: 20px;
+    padding: 25px;
+    border: 1px solid rgba(0, 140, 255, .18);
+    border-radius: 18px;
+    background: rgba(7, 15, 26, .75);
+    box-shadow: var(--shadow);
+}
+
+.order-summary h3,
+.customer-form h3,
+.payment-method h3 {
+    margin-bottom: 18px;
+    font-size: 18px;
+}
+
+.customer-form label {
+    display: block;
+    margin: 14px 0 7px;
+    color: #b6c7d9;
+    font-size: 13px;
+}
+
+.customer-form input {
+    width: 100%;
+    padding: 13px 14px;
+    outline: none;
+    border: 1px solid rgba(0, 140, 255, .2);
+    border-radius: 9px;
+    color: white;
+    background: rgba(0, 0, 0, .22);
+    transition: .3s ease;
+}
+
+.customer-form input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(0, 140, 255, .08);
+}
+
+.payment-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.payment-option {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    border: 1px solid rgba(0, 140, 255, .18);
+    border-radius: 12px;
+    color: white;
+    background: rgba(0, 0, 0, .18);
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.payment-option:hover,
+.payment-option.active {
+    border-color: var(--blue);
+    background: rgba(0, 140, 255, .10);
+    box-shadow: 0 0 20px rgba(0, 140, 255, .1);
+}
+
+.payment-option > span {
+    font-size: 25px;
+}
+
+.payment-option strong,
+.payment-option small {
+    display: block;
+}
+
+.payment-option small {
+    margin-top: 4px;
+    color: var(--muted);
+}
+
+.pix-area,
+.card-area {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid rgba(0, 140, 255, .14);
+    border-radius: 13px;
+    background: rgba(0, 140, 255, .035);
+}
+
+.pix-area h4,
+.card-message h4 {
+    margin-bottom: 8px;
+}
+
+.pix-area p,
+.card-message p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#pixCode {
+    width: 100%;
+    min-height: 105px;
+    margin-top: 14px;
+    padding: 12px;
+    resize: none;
+    outline: none;
+    border: 1px solid rgba(0, 140, 255, .22);
+    border-radius: 9px;
+    color: #bde8ff;
+    background: #02060b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.copy-pix {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 9px;
+    color: white;
+    background: rgba(0, 140, 255, .14);
+    border: 1px solid rgba(0, 140, 255, .28);
+}
+
+.copy-pix:hover {
+    background: rgba(0, 140, 255, .24);
+}
+
+.card-message {
+    text-align: center;
+}
+
+.card-message > span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 38px;
+}
+
+.card-message .checkout-button {
+    width: auto;
+    margin-top: 15px;
+}
+
+.finish-button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 16px;
+    border-radius: 11px;
+    color: white;
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+    font-weight: 800;
+}
+
+.security-text {
+    margin-top: 15px;
+    text-align: center;
+    color: #718297;
+    font-size: 12px;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+    padding: 55px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(0, 140, 255, .12);
+    background: #02050a;
+}
+
+.footer-logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+footer p {
+    margin: 10px 0 18px;
+    color: var(--muted);
+}
+
+footer small {
+    color: #526276;
+}
+
+/* =========================
+   ESTADOS / MENSAGENS
+   ========================= */
+
+.empty-cart {
+    padding: 35px 10px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.no-books {
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    text-align: center;
+    border: 1px dashed rgba(0, 140, 255, .2);
+    border-radius: 18px;
+    color: var(--muted);
+}
+
+/* =========================
+   ANIMAÇÕES
+   ========================= */
+
+@keyframes gridMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(55px); }
+}
+
+@keyframes floatBook {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-35px) rotate(8deg);
+    }
+}
+
+@keyframes heroIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bookEntrance {
+    from {
+        opacity: 0;
+        transform: scale(.75) translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes floatingBook {
+    0%, 100% {
+        transform: perspective(800px) rotateY(-18deg) rotateX(4deg) translateY(0);
+    }
+    50% {
+        transform: perspective(800px) rotateY(-12deg) rotateX(1deg) translateY(-18px);
+    }
+}
+
+@keyframes hologramPulse {
+    0%, 100% {
+        transform: scale(.9);
+        opacity: .45;
+    }
+    50% {
+        transform: scale(1.12);
+        opacity: .8;
+    }
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(.94) translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* =========================
+   RESPONSIVO
+   ========================= */
+
+@media (max-width: 900px) {
+    .header {
+        padding: 14px 4%;
+    }
+
+    .header nav {
+        gap: 18px;
+    }
+
+    .hero {
+        min-height: auto;
+        padding-top: 75px;
+        padding-bottom: 65px;
+    }
+
+    .hero-book {
+        width: 270px;
+        height: 350px;
+    }
+
+    .floating-book {
+        width: 155px;
+        height: 210px;
+        font-size: 68px;
+    }
+}
+
+@media (max-width: 720px) {
+    .header {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .header nav {
+        order: 3;
+        width: 100%;
+    }
+
+    .cart-button {
+        position: absolute;
+        top: 15px;
+        right: 4%;
+    }
+
+    .logo {
+        margin-right: auto;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .hero-content > p {
+        font-size: 16px;
+    }
+
+    .hero-book {
+        margin-top: 10px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .payment-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .header nav {
+        gap: 14px;
+    }
+
+    .header nav a {
+        font-size: 12px;
+    }
+
+    .hero {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+    .hero-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
+    }
+
+    .genres-section,
+    .books-section {
+        width: 90%;
+    }
+
+    .books-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        padding: 27px 20px;
+    }
+}
