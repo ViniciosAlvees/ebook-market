@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ebooks | Conhecimento sem limites</title>
+    <link rel="stylesheet" href="./ebook.css">
+</head>
+<body>
+    <div class="background-books">
+        <span>📚</span><span>📖</span><span>📕</span><span>📘</span>
+        <span>📗</span><span>📙</span><span>📚</span><span>📖</span>
+    </div>
+
+    <header class="header">
+        <div class="logo"><span>◈</span> EBOOKS</div>
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#livros">Ebooks</a>
+            <a href="#generos">Gêneros</a>
+        </nav>
+        <button class="cart-button" onclick="abrirCarrinho()">
+            🛒 Carrinho <span id="contadorCarrinho">0</span>
+        </button>
+    </header>
+
+    <main id="inicio">
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-tag">✦ CONHECIMENTO DIGITAL</span>
+                <h1>Conhecimento <span>sem limites.</span></h1>
+                <p>Encontre ebooks para aprender, evoluir e transformar conhecimento em resultados.</p>
+                <div class="hero-buttons">
+                    <button class="primary-button" onclick="mostrarLivros()">Ver ebooks</button>
+                    <button class="secondary-button" onclick="mostrarGeneros()">Explorar gêneros</button>
+                </div>
+            </div>
+            <div class="hero-book">
+                <div class="hologram"></div>
+                <div class="floating-book">📖</div>
+            </div>
+        </section>
+
+        <section id="generos" class="genres-section">
+            <div class="section-title">
+                <span>EXPLORE</span>
+                <h2>Encontre seu próximo <strong>ebook.</strong></h2>
+            </div>
+            <div class="genres">
+                <button class="active" onclick="filtrarGenero('Todos', this)">Todos</button>
+                <button onclick="filtrarGenero('Saúde', this)">❤️ Saúde</button>
+                <button onclick="filtrarGenero('Educação', this)">🎓 Educação</button>
+                <button onclick="filtrarGenero('Terror', this)">👻 Terror</button>
+                <button onclick="filtrarGenero('Ação', this)">⚡ Ação</button>
+                <button onclick="filtrarGenero('Drama', this)">🎭 Drama</button>
+                <button onclick="filtrarGenero('Romance', this)">💙 Romance</button>
+                <button onclick="filtrarGenero('Tecnologia', this)">💻 Tecnologia</button>
+            </div>
+        </section>
+
+        <section id="livros" class="books-section">
+            <div class="section-heading">
+                <div>
+                    <span>CATÁLOGO</span>
+                    <h2>Ebooks disponíveis</h2>
+                </div>
+                <p id="quantidadeLivros">1 ebook disponível</p>
+            </div>
+            <div id="listaLivros" class="books-grid"></div>
+        </section>
+    </main>
+
+    <div id="modalCarrinho" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="fecharCarrinho()">×</button>
+            <span class="modal-tag">SEU CARRINHO</span>
+            <h2>Seus ebooks</h2>
+            <div id="itensCarrinho"></div>
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="totalCarrinho">R$ 0,00</strong>
+            </div>
+            <button class="checkout-button" onclick="irParaPagamento()">
+                Continuar para pagamento →
+            </button>
+        </div>
+    </div>
+
+    <section id="pagamento" class="payment-section">
+        <div class="payment-container">
+            <button class="back-button" onclick="voltarCatalogo()">← Voltar para ebooks</button>
+            <span class="hero-tag">PAGAMENTO SEGURO</span>
+            <h2>Finalize sua compra</h2>
+            <p class="payment-description">Preencha seus dados para receber o seu ebook.</p>
+
+            <div class="order-summary">
+                <h3>Resumo do pedido</h3>
+                <div id="resumoPedido"></div>
+                <div class="summary-total">
+                    <span>Total</span>
+                    <strong id="totalPagamento">R$ 0,00</strong>
+                </div>
+            </div>
+
+            <div class="customer-form">
+                <h3>Seus dados</h3>
+                <label>Nome completo</label>
+                <input type="text" id="nomeCliente" placeholder="Digite seu nome">
+                <label>E-mail</label>
+                <input type="email" id="emailCliente" placeholder="Digite seu e-mail">
+                <label>CPF</label>
+                <input type="text" id="cpfCliente" placeholder="000.000.000-00">
+            </div>
+
+            <div class="payment-method">
+                <h3>Forma de pagamento</h3>
+                <div class="payment-options">
+                    <button id="pixOption" class="payment-option active" onclick="selecionarPagamento('pix')">
+                        <span>▣</span>
+                        <div><strong>PIX</strong><small>Pagamento instantâneo</small></div>
+                    </button>
+                    <button id="cardOption" class="payment-option" onclick="selecionarPagamento('card')">
+                        <span>💳</span>
+                        <div><strong>Cartão</strong><small>Crédito ou débito</small></div>
+                    </button>
+                </div>
+
+                <div id="pixArea" class="pix-area">
+                    <h4>PIX Copia e Cola</h4>
+                    <p>Copie o código abaixo para realizar o pagamento:</p>
+                    <textarea id="pixCode" readonly>00020126360014br.gov.bcb.pix0114+55119601231195204000053039865802BR5925Vinicios Alves Dos Santos6009Sao Paulo62290525REC6AA3EE1D3AD836541099916304BCDC</textarea>
+                    <button class="copy-pix" onclick="copiarPix()">📋 Copiar código PIX</button>
+                </div>
+
+                <div id="cardArea" class="card-area" style="display:none;">
+                    <div class="card-message">
+                        <span>💳</span>
+                        <h4>Pagamento com cartão</h4>
+                        <p>O pagamento com cartão deverá ser realizado através de um gateway de pagamento seguro.</p>
+                        <button class="checkout-button" onclick="iniciarPagamentoCartao()">Continuar com cartão</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="finish-button" onclick="finalizarPedido()">Confirmar pedido</button>
+            <p class="security-text">🔒 Seus dados são tratados com segurança.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">◈ EBOOKS</div>
+        <p>Conhecimento sem limites.</p>
+        <small>© 2026 Ebooks. Todos os direitos reservados.</small>
+    </footer>
+
+    <script src="./ebook.js"></script>
+</body>
+</html>
